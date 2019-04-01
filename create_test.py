@@ -91,37 +91,35 @@ class create_test(Frame):
         lblAnswers1 = Label(self, font=("Calibri", 12, "bold"), text="Answers:")
         lblAnswers1.grid(row=6, column=0, sticky=W)
 
-        self.varA11 = IntVar()
+        self.varA1 = IntVar()
+        self.varA1.set(1)
         lblAnswers11 = Label(self, font=("Calibri", 12, "bold"), text="1")
         lblAnswers11.grid(row=6, column=0, sticky=E)
         self.txtA11 = Entry(self, width=35, font=("Calibri", 12))
         self.txtA11.grid(row=6, column=1, columnspan=2)
-        chkA11 = Checkbutton(self, text="Correct answer", variable=self.varA11)
-        chkA11.grid(row=7, column=1, columnspan=2)
+        rdoA11 = Radiobutton(self, text="Correct answer", variable=self.varA1, value=1)
+        rdoA11.grid(row=7, column=1, columnspan=2)
 
-        self.varA12 = IntVar()
         lblAnswers12 = Label(self, font=("Calibri", 12, "bold"), text="2")
         lblAnswers12.grid(row=8, column=0, sticky=E)
         self.txtA12 = Entry(self, width=35, font=("Calibri", 12))
         self.txtA12.grid(row=8, column=1, columnspan=2)
-        chkA12 = Checkbutton(self, text="Correct answer", variable=self.varA12)
-        chkA12.grid(row=9, column=1, columnspan=2)
+        rdoA12 = Radiobutton(self, text="Correct answer", variable=self.varA1, value=2)
+        rdoA12.grid(row=9, column=1, columnspan=2)
 
-        self.varA13 = IntVar()
         lblAnswers13 = Label(self, font=("Calibri", 12, "bold"), text="3")
         lblAnswers13.grid(row=10, column=0, sticky=E)
         self.txtA13 = Entry(self, width=35, font=("Calibri", 12))
         self.txtA13.grid(row=10, column=1, columnspan=2)
-        chkA13 = Checkbutton(self, text="Correct answer", variable=self.varA13)
-        chkA13.grid(row=11, column=1, columnspan=2)
+        rdoA13 = Radiobutton(self, text="Correct answer", variable=self.varA1, value=3)
+        rdoA13.grid(row=11, column=1, columnspan=2)
 
-        self.varA14 = IntVar()
         lblAnswers14 = Label(self, font=("Calibri", 12, "bold"), text="4")
         lblAnswers14.grid(row=12, column=0, sticky=E)
         self.txtA14 = Entry(self, width=35, font=("Calibri", 12))
         self.txtA14.grid(row=12, column=1, columnspan=2)
-        chkA14 = Checkbutton(self, text="Correct answer", variable=self.varA14)
-        chkA14.grid(row=13, column=1, columnspan=2)
+        rdoA14 = Radiobutton(self, text="Correct answer", variable=self.varA1, value=4)
+        rdoA14.grid(row=13, column=1, columnspan=2)
 
 
         lblQ2 = Label(self, text="Question 2:", font=("Calibri", 12, "bold"))
@@ -138,37 +136,35 @@ class create_test(Frame):
         lblAnswers2 = Label(self, font=("Calibri", 12, "bold"), text="Answers:")
         lblAnswers2.grid(row=15, column=0, sticky=W)
 
-        self.varA21 = IntVar()
+        self.varA2 = IntVar()
+        self.varA2.set(1)
         lblAnswers21 = Label(self, font=("Calibri", 12, "bold"), text="1")
         lblAnswers21.grid(row=15, column=0, sticky=E)
         self.txtA21 = Entry(self, width=35, font=("Calibri", 12))
         self.txtA21.grid(row=15, column=1, columnspan=2)
-        chkA21 = Checkbutton(self, text="Correct answer", variable=self.varA21)
-        chkA21.grid(row=16, column=1, columnspan=2)
+        rdoA21 = Radiobutton(self, text="Correct answer", variable=self.varA2, value=1)
+        rdoA21.grid(row=16, column=1, columnspan=2)
 
-        self.varA22 = IntVar()
         lblAnswers22 = Label(self, font=("Calibri", 12, "bold"), text="2")
         lblAnswers22.grid(row=17, column=0, sticky=E)
         self.txtA22 = Entry(self, width=35, font=("Calibri", 12))
         self.txtA22.grid(row=17, column=1, columnspan=2)
-        chkA22 = Checkbutton(self, text="Correct answer", variable=self.varA22)
-        chkA22.grid(row=18, column=1, columnspan=2)
+        rdoA22 = Radiobutton(self, text="Correct answer", variable=self.varA2, value=2)
+        rdoA22.grid(row=18, column=1, columnspan=2)
 
-        self.varA23 = IntVar()
         lblAnswers23 = Label(self, font=("Calibri", 12, "bold"), text="3")
         lblAnswers23.grid(row=19, column=0, sticky=E)
         self.txtA23 = Entry(self, width=35, font=("Calibri", 12))
         self.txtA23.grid(row=19, column=1, columnspan=2)
-        chkA23 = Checkbutton(self, text="Correct answer", variable=self.varA23)
-        chkA23.grid(row=20, column=1, columnspan=2)
+        rdoA23 = Radiobutton(self, text="Correct answer", variable=self.varA2, value=3)
+        rdoA23.grid(row=20, column=1, columnspan=2)
 
-        self.varA24 = IntVar()
         lblAnswers24 = Label(self, font=("Calibri", 12, "bold"), text="4")
         lblAnswers24.grid(row=21, column=0, sticky=E)
         self.txtA24 = Entry(self, width=35, font=("Calibri", 12))
         self.txtA24.grid(row=21, column=1, columnspan=2)
-        chkA24 = Checkbutton(self, text="Correct answer", variable=self.varA24)
-        chkA24.grid(row=22, column=1, columnspan=2)
+        rdoA24 = Radiobutton(self, text="Correct answer", variable=self.varA2, value=4)
+        rdoA24.grid(row=22, column=1, columnspan=2)
 
     def init_buttons(self):
         btnSubmit = Button(self, text="Submit", font=("Calibri", 12,), width=20, command=self.submit_test)
@@ -189,13 +185,20 @@ class create_test(Frame):
             writer.writerow(["USE_DATES", self.varDates.get()])
             writer.writerow(["QUESTION_NO", 1])
             writer.writerow(["QUESTION", self.txtQ1.get("1.0", "end-1c")])
-            writer.writerow(["ANSWER_1", self.txtA11.get(), self.varA11.get()])
-            writer.writerow(["ANSWER_2", self.txtA12.get(), self.varA12.get()])
-            writer.writerow(["ANSWER_3", self.txtA13.get(), self.varA13.get()])
-            writer.writerow(["ANSWER_4", self.txtA14.get(), self.varA14.get()])
+            answers1 = ["ANSWER_1", "ANSWER_2", "ANSWER_3", "ANSWER_4"]
+            answers2 = [self.txtA11.get(), self.txtA12.get(), self.txtA13.get(), self.txtA14.get(),
+                        self.txtA21.get(), self.txtA22.get(), self.txtA23.get(), self.txtA24.get()]
+            counter = 0
+            for i in answers1:
+                if str(self.varA1.get()) in i:
+                    writer.writerow([i, answers2[counter], 1])
+                else:
+                    writer.writerow([i, answers2[counter], 0])
+                counter += 1
             writer.writerow(["QUESTION_NO", 2])
             writer.writerow(["QUESTION", self.txtQ2.get("1.0", "end-1c")])
-            writer.writerow(["ANSWER_1", self.txtA21.get(), self.varA21.get()])
-            writer.writerow(["ANSWER_2", self.txtA22.get(), self.varA22.get()])
-            writer.writerow(["ANSWER_3", self.txtA23.get(), self.varA23.get()])
-            writer.writerow(["ANSWER_4", self.txtA24.get(), self.varA24.get()])
+            for i in answers1:
+                if str(self.varA2.get()) in i:
+                    writer.writerow([i, answers2[counter], 1])
+                else:
+                    writer.writerow([i, answers2[counter], 0])
