@@ -41,12 +41,6 @@ class DisplayRoot(Frame):
         student_menu(t1)
         t1.wm_protocol("WM_DELETE_WINDOW", root.destroy)
 
-    def open_current_test(self):
-        t1 = Toplevel(root)
-        root.withdraw()
-        current_test(t1)
-        t1.wm_protocol("WM_DELETE_WINDOW", root.destroy)
-
 root.resizable(width=False, height=False)
 DisplayRoot(root)
 
