@@ -53,7 +53,7 @@ class student_menu(Frame):
 		self.listProg.selection_set(END)
 		
 		btnSubmit = Button(self, text="Submit", font=("Calibri", 12,), width=20, command=self.open_test)
-		btnSubmit.grid(row=23, column=0, columnspan=3)
+		btnSubmit.grid(row=4, column=3, columnspan=3)
 
 
 
@@ -64,4 +64,4 @@ class student_menu(Frame):
 			tkinter.messagebox.showwarning("Entry Error, please select a test")
 		else:
 			t1 = Toplevel(self)
-			current_test(t1)
+			current_test(t1, choice)
