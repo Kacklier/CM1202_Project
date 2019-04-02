@@ -179,6 +179,7 @@ class create_test(Frame):
                 if line[0] == "TEST":
                     counter += 1
             writer.writerow(["TEST", counter])
+            writer.writerow(["TITLE", self.inpTitle.get()])
             writer.writerow(["TYPE", self.varType.get()])
             writer.writerow(["DURATION", self.varDuration.get()])
             writer.writerow(["DATES", self.calStart.get(), self.calEnd.get()])
