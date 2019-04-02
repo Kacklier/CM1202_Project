@@ -202,3 +202,4 @@ class create_test(Frame):
                     writer.writerow([i, answers2[counter], 1])
                 else:
                     writer.writerow([i, answers2[counter], 0])
+                counter += 1
