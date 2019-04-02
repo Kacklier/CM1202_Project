@@ -1,6 +1,7 @@
 from tkinter import *
 from create_test import create_test
 from student_menu import student_menu
+from current_test import current_test
 root = Tk()
 
 
@@ -37,11 +38,14 @@ class DisplayRoot(Frame):
     def open_student_menu(self):
         t1 = Toplevel(root)
         root.withdraw()
-# TODO:
-# create_test will need to be changed to lecturer_menu (or similar), which in turn can lead to create_test
         student_menu(t1)
         t1.wm_protocol("WM_DELETE_WINDOW", root.destroy)
 
+    def open_current_test(self):
+        t1 = Toplevel(root)
+        root.withdraw()
+        current_test(t1)
+        t1.wm_protocol("WM_DELETE_WINDOW", root.destroy)
 
 root.resizable(width=False, height=False)
 DisplayRoot(root)

@@ -1,17 +1,17 @@
 from tkinter import *
-from test_db_template import Test
 from tkcalendar import DateEntry
 import csv
 import datetime
 
 class student_menu(Frame):
+	
 	def __init__(self, master):
 		Frame.__init__(self, master)
 		self.grid()
 		self.init_window(master)
 		self.init_title()
-		self.init_test_select()
 		self.read_test()
+		self.open_test()
 
 	def init_window(self, master):
 		master.title("Create a new test")
@@ -21,7 +21,22 @@ class student_menu(Frame):
 		lblTitle = Label(self, text="Please choose a test:", font=("Calibri", 12, "bold"))
 		lblTitle.grid(row=0, column=0, sticky=W)
 
-	def init_test_select(self):
+
+	def read_test(self):
+		test_data = []
+		titles = list()
+		with open('tests\\tests.csv', newline='') as test_file:
+			test_data = list(csv.reader(test_file))
+
+		for key in test_data:
+			print(key)
+			if key[0] == "TITLE":
+				titles.append(key[1])
+
+		print(test_data)
+		print(titles)
+		print(test_data[1][0])
+
 		self.listProg = Listbox(self,height=3)
 		scroll = Scrollbar(self,command=self.listProg.yview)
 		self.listProg.configure(yscrollcommand=scroll.set)
@@ -29,21 +44,12 @@ class student_menu(Frame):
 		self.listProg.grid(row=0,column=2, columnspan=2, sticky=NE)
 		scroll.grid(row=0,column=4,sticky=W)
 
-		for item in ["CS", "CS with", "BIS", "SE", "Joints", ""]:
+		for item in titles:
 			self.listProg.insert(END, item)
 
 		self.listProg.selection_set(END)
+		
 
-	def read_test(self):
-		#with open('test\\test.csv', 'rb') as test_file:
-		#	reader = csv.reader(test_file)
-		#	counter = 0
-			#for row in reader:
-			#	if row[0] == "TITLE":
-		pass
-
-
-
-
-
-
+		#how can I close the current window and open the current_test window
+		btnSubmit = Button(self, text="Submit", font=("Calibri", 12,), width=20, command=self.#idek what to put here)
+		btnSubmit.grid(row=23, column=0, columnspan=3)
