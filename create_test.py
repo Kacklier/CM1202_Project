@@ -17,19 +17,17 @@ class create_test(Frame):
         Frame.__init__(self, master)
         self.previous = previous
         self.grid()
-        self.init_window(master)
+        self.init_window()
         self.init_title()
         self.init_type_select()
         self.init_test_duration()
         self.init_dates()
-        self.init_questions()
+        self.init_buttons()
 
-    def init_window(self, master):
-        master.title("Create a new test")
-        master.minsize(506, 0)
-        # the size is adjusted automatically to fit every element, however
-        # it can be adjusted manutally with master.geometry() function
-        # master.geometry("{}x{}".format("400", "300"))
+    def init_window(self):
+        self.master.title("Create a new test")
+        self.master.minsize(506, 0)
+        self.master.resizable(width=False, height=False)
 
     def init_title(self):
         lblTitle = Label(self, text="Enter test title:", font=("Calibri", 12, "bold"))
@@ -80,7 +78,7 @@ class create_test(Frame):
         chkCheck = Checkbutton(self, text="Do you want to use start and end dates?", variable=self.varDates, font=("Calibri", 12))
         chkCheck.grid(row=4, column=1, sticky=E, columnspan=2)
 
-    def init_questions(self):
+    def init_buttons(self):
         global dynamic_objects
         btnAdd = Button(self, text="Add a question", font=("Calibri", 12), width=16, height=1)
         btnAdd['command'] = self.add_question
@@ -88,16 +86,28 @@ class create_test(Frame):
         btnSubmit = Button(self, text="Submit test", font=("Calibri", 12), width=16, height=1)
         btnSubmit['command'] = self.submit_test
         btnSubmit.grid(row=(number_questions + 5), column=2, columnspan=2)
+        btnBack = Button(self, text="Cancel", font=("Calibri", 12), width=10, height=1)
+        btnBack['command'] = self.test_cancel
+        btnBack.grid(row=(number_questions + 5), column=0, sticky=W)
+        dynamic_objects.append(btnBack)
         dynamic_objects.append(btnAdd)
         dynamic_objects.append(btnSubmit)
+
+    def test_cancel(self):
+        msgBox = messagebox.askquestion("Cancel", "Are you sure you want to cancel creating the assessment?", icon="warning")
+        if msgBox == 'yes':
+            self.master.destroy()
+            self.previous.deiconify()
 
     def add_question(self):
         global number_questions
         if number_questions == 10:
             messagebox.showerror("Error", "You can only have up to 10 questions")
         else:
-            dynamic_objects[0].destroy()
+            dynamic_objects[2].destroy()
             dynamic_objects[1].destroy()
+            dynamic_objects[0].destroy()
+            dynamic_objects.remove(dynamic_objects[2])
             dynamic_objects.remove(dynamic_objects[1])
             dynamic_objects.remove(dynamic_objects[0])
             lblQues = Label(self, text="Enter the question here:", font=("Calibri", 12, "bold"))
@@ -139,7 +149,7 @@ class create_test(Frame):
             dynamic_objects[i].destroy()
             dynamic_objects.remove(dynamic_objects[i])
         number_answers = 0
-        self.init_questions()
+        self.init_buttons()
 
     def add_answer(self):
         global anwsers
@@ -209,28 +219,31 @@ class create_test(Frame):
 
     def submit_test(self):
         global number_questions
-        with open('tests\\tests.csv', 'r+', newline='') as csvFile:
-            writer = csv.writer(csvFile)
-            reader = csv.reader(csvFile)
-            counter = 1
-            for line in reader:
-                if line[0] == "TEST":
-                    counter += 1
-            writer.writerow(["TEST", counter])
-            writer.writerow(["TITLE", self.inpTitle.get()])
-            writer.writerow(["TYPE", self.varType.get()])
-            writer.writerow(["DURATION", self.varDuration.get()])
-            writer.writerow(["DATES", self.calStart.get(), self.calEnd.get()])
-            writer.writerow(["USE_DATES", self.varDates.get()])
-            for i in range(1, number_questions + 1):
-                writer.writerow(["QUESTION_NO", i])
-                writer.writerow(["QUESTION", questions["Question_" + str(i)]])
+        if questions == {}:
+            messagebox.showerror("Error", "Please create at least one question")
+        else:
+            with open('tests\\tests.csv', 'r+', newline='') as csvFile:
+                writer = csv.writer(csvFile)
+                reader = csv.reader(csvFile)
                 counter = 1
-                for ans in questions["Answers_" + str(i)]:
-                    if ans == questions["Answers_" + str(i)][questions["Correct_Ans_" + str(i)] - 1]:
-                        writer.writerow(["ANSWER_" + str(counter), ans, 1])
-                    else:
-                        writer.writerow(["ANSWER_" + str(counter), ans, 0])
-                    counter += 1
-        self.master.destroy()
-        self.previous.deiconify()
+                for line in reader:
+                    if line[0] == "TEST":
+                        counter += 1
+                writer.writerow(["TEST", counter])
+                writer.writerow(["TITLE", self.inpTitle.get()])
+                writer.writerow(["TYPE", self.varType.get()])
+                writer.writerow(["DURATION", self.varDuration.get()])
+                writer.writerow(["DATES", self.calStart.get(), self.calEnd.get()])
+                writer.writerow(["USE_DATES", self.varDates.get()])
+                for i in range(1, number_questions + 1):
+                    writer.writerow(["QUESTION_NO", i])
+                    writer.writerow(["QUESTION", questions["Question_" + str(i)]])
+                    counter = 1
+                    for ans in questions["Answers_" + str(i)]:
+                        if ans == questions["Answers_" + str(i)][questions["Correct_Ans_" + str(i)] - 1]:
+                            writer.writerow(["ANSWER_" + str(counter), ans, 1])
+                        else:
+                            writer.writerow(["ANSWER_" + str(counter), ans, 0])
+                        counter += 1
+            self.master.destroy()
+            self.previous.deiconify()
