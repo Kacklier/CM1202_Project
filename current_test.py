@@ -2,19 +2,26 @@ from tkinter import *
 from test_db_template import Test
 from tkcalendar import DateEntry
 import csv
+import time
 import datetime
 
 
 class current_test(Frame):
 	
-	def __init__(self, master, choice):
+	def __init__(self, master, choice, FormSum):
 		Frame.__init__(self, master)
 		self.choice = choice
+		self.FormSum = FormSum
 		self.grid()
 		self.init_window(master)
 		self.read_test()
 		self.question_load()
 		self.init_button()
+		self.countdown()
+
+	def init_window(self, master):
+		master.title(self.choice)
+		master.minsize(506, 0)
 
 	def read_test(self):
 		self.test_data = []
@@ -32,8 +39,19 @@ class current_test(Frame):
 					self.startpoint = counter-2
 				elif key[1] != self.choice and self.startpoint != 0:
 					self.endpoint = counter-3
-		if self.endpoint ==0:
+
+		if self.endpoint ==0 and self.startpoint != 0:
 			self.endpoint = counter -1
+		elif self.endpoint ==0 and self.startpoint == 0:
+			counter = 0
+			for key in self.test_data:
+				counter += 1
+				if key[0] == "TITLE":
+					if key[1] != self.choice:
+						self.endpoint = counter - 3
+						break
+		print(self.startpoint)
+		print(self.endpoint)
 
 		lblTitle = Label(self, text="Title: ", font=("Calibri", 12, "bold"))
 		lblTitle.grid(row=0, column=0, sticky=W)
@@ -285,8 +303,35 @@ class current_test(Frame):
 
 
 	def init_button(self):
-		btnSubmit = Button(self, text="Submit", font=("Calibri", 12,), width=20, command=self.save_results)
-		btnSubmit.grid(row=15, column=3, columnspan=3)		
+		if self.FormSum == 1:
+			btnSubmitSum = Button(self, text="Summative Submit", font=("Calibri", 12,), width=20, command=self.sum_check)
+			btnSubmitSum.grid(row=15, column=3, columnspan=3)	
+		elif self.FormSum == 2:
+			btnSubmitForm = Button(self, text="Formative Submit", font=("Calibri", 12,), width=20, command=self.form_check)
+			btnSubmitForm.grid(row=15, column=3, columnspan=3)		
+
+	def countdown(self):
+		t = int((int(self.test_data[self.startpoint + 3][1]) * 60))
+		print(t)
+		while t:
+			mins, secs = divmod(t, 60)
+			timeformat = '{:02d}:{:02d}'.format(mins, secs)
+			txtTime = Label(self,text = timeformat, font=("Calibri", 12), height=2)
+			txtTime.grid(row=40, column=0, columnspan=2, sticky=W)
+
+			time.sleep(1)
+			t -= 1
+	
+	def sum_check(self):
+    
+
+
+		if current_time < self.test_data[self.startpoint + 3][1]:
+			self.save_results()
+
+	def form_check(self):
+		pass
+
 
 	def save_results(self):
 		with open('tests\\results.csv', 'r+', newline='') as results_file:
@@ -308,8 +353,4 @@ class current_test(Frame):
 				writer.writerow(["QUESTION_NO", questions[i]])
 				writer.writerow(["ANSWER", answers[i]])
 
-
-	def init_window(self, master):
-		master.title(self.choice)
-		master.minsize(506, 0)
 

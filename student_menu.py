@@ -30,10 +30,10 @@ class student_menu(Frame):
 
 		self.varforsum = IntVar()
 		self.varforsum.set(1)
-		rdoForm = Radiobutton(self, text= "formative", variable=self.varforsum, value=1)
+		rdoForm = Radiobutton(self, text= "formative", variable=self.varforsum, value=2)
 		rdoForm.grid(row=5, column=3, columnspan=1)
 
-		rdoSum = Radiobutton(self, text= "summative", variable=self.varforsum, value=2)
+		rdoSum = Radiobutton(self, text= "summative", variable=self.varforsum, value=1)
 		rdoSum.grid(row=5, column=4, columnspan=1)
 
 	def read_test(self):
@@ -78,7 +78,7 @@ class student_menu(Frame):
 			tkinter.messagebox.showwarning("Entry Error, please select a test")
 		else:
 			t1 = Toplevel(self)
-			current_test(t1, choice)
+			current_test(t1, choice, self.varforsum.get())
 
 	def select_type(self):
 		self.summative = list()
@@ -89,12 +89,7 @@ class student_menu(Frame):
 			if self.test_data[i][0] == "TYPE":
 				for items in range(0, titlecount):
 					if self.titles[items] == self.test_data[i-1][1]:
-						print(self.titles[items])
-						print(self.test_data[i-1][1])
-						print(self.test_data[i][1])
 						if self.test_data[i][1] == "summative":
 							self.summative.append(self.titles[items])
-							print(self.summative)
 						if self.test_data[i][1] == "formative":
 							self.formative.append(self.titles[items])
-							print(self.formative)
