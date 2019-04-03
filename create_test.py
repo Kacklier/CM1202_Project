@@ -147,10 +147,10 @@ class create_test(Frame):
         btnFinishQ.grid(row=(self.number_questions + self.number_answers + 7), column=1, sticky=E)
         btnRemoveAns = Button(self, text="Remove answer", font=("Calibri", 10))
         btnRemoveAns['command'] = self.remove_answer
-        btnRemoveAns.grid(row=(self.number_questions + self.number_answers + 7), column=0, sticky=E)
+        btnRemoveAns.grid(row=(self.number_questions + self.number_answers + 7), column=0, sticky=W)
         btnAddAns = Button(self, text="Add an answer", font=("Calibri", 10))
         btnAddAns['command'] = self.add_answer
-        btnAddAns.grid(row=(self.number_questions + self.number_answers + 7), column=0, sticky=W)
+        btnAddAns.grid(row=(self.number_questions + self.number_answers + 7), column=0, sticky=E)
         btnCancel = Button(self, text="Cancel the question", font=("Calibri", 10))
         btnCancel['command'] = self.cancel_question
         btnCancel.grid(row=(self.number_questions + self.number_answers + 7), column=2, sticky=E)
