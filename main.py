@@ -14,7 +14,7 @@ class DisplayRoot(Frame):
 
     def init_window(self):
         self.master.title("Test creator")
-        root.geometry("{}x{}".format("400", "200"))
+        root.geometry("{}x{}".format("390", "160"))
 
         Label(root, text="Log in as:", font=("Clibri", 22)).grid(row=0, column=0, columnspan=2, padx=130)
 
