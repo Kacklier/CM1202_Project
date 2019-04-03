@@ -12,6 +12,7 @@ class create_test(Frame):
         self.number_questions = 0
         self.number_answers = 0
         self.dynamic_objects = []
+        self.question_labels = []
         self.questions = {}
         self.answers = []
         self.previous = previous
@@ -78,18 +79,40 @@ class create_test(Frame):
         chkCheck.grid(row=4, column=1, sticky=E, columnspan=2)
 
     def init_buttons(self):
-        btnAdd = Button(self, text="Add a question", font=("Calibri", 12), width=16, height=1)
-        btnAdd['command'] = self.add_question
-        btnAdd.grid(row=(self.number_questions + 5), column=0, columnspan=2)
-        btnSubmit = Button(self, text="Submit test", font=("Calibri", 12), width=16, height=1)
-        btnSubmit['command'] = self.submit_test
-        btnSubmit.grid(row=(self.number_questions + 5), column=2, columnspan=2)
-        btnBack = Button(self, text="Cancel", font=("Calibri", 12), width=10, height=1)
+
+        btnBack = Button(self, text="Cancel", font=("Calibri", 10), width=10, height=1)
         btnBack['command'] = self.test_cancel
         btnBack.grid(row=(self.number_questions + 5), column=0, sticky=W)
+        btnAdd = Button(self, text="Add a question", font=("Calibri", 10), width=13, height=1)
+        btnAdd['command'] = self.add_question
+        btnAdd.grid(row=(self.number_questions + 5), column=0, columnspan=2, sticky=N, padx=2)
+        btnRemoveQ = Button(self, text="Remove last question", font=("Calibri", 10), width=17, height=1)
+        btnRemoveQ['command'] = self.remove_question
+        btnRemoveQ.grid(row=(self.number_questions + 5), column=1, sticky=E, padx=2)
+        btnSubmit = Button(self, text="Submit test", font=("Calibri", 10), width=16, height=1)
+        btnSubmit['command'] = self.submit_test
+        btnSubmit.grid(row=(self.number_questions + 5), column=2, columnspan=2, sticky=E)
+        self.dynamic_objects.append(btnRemoveQ)
         self.dynamic_objects.append(btnBack)
         self.dynamic_objects.append(btnAdd)
         self.dynamic_objects.append(btnSubmit)
+
+    def remove_question(self):
+        if self.number_questions > 0:
+            for i in range(3, -1, -1):
+                self.dynamic_objects[i].destroy()
+                self.dynamic_objects.pop(i)
+            to_remove = []
+            for key, value in self.questions.items():
+                if str(self.number_questions) in key:
+                    to_remove.append([key, value])
+            for lst in to_remove:
+                if self.questions[lst[0]] == lst[1]:
+                    self.questions.pop(lst[0])
+            self.question_labels[len(self.question_labels) - 1].destroy()
+            self.question_labels.pop(len(self.question_labels) - 1)
+            self.number_questions -= 1
+            self.init_buttons()
 
     def test_cancel(self):
         msgBox = messagebox.askquestion("Cancel", "Are you sure you want to cancel creating the assessment?", icon="warning")
@@ -101,12 +124,9 @@ class create_test(Frame):
         if self.number_questions == 10:
             messagebox.showerror("Error", "You can only have up to 10 questions")
         else:
-            self.dynamic_objects[2].destroy()
-            self.dynamic_objects[1].destroy()
-            self.dynamic_objects[0].destroy()
-            self.dynamic_objects.remove(self.dynamic_objects[2])
-            self.dynamic_objects.remove(self.dynamic_objects[1])
-            self.dynamic_objects.remove(self.dynamic_objects[0])
+            for i in range(3, -1, -1):
+                self.dynamic_objects[i].destroy()
+                self.dynamic_objects.pop(i)
             lblQues = Label(self, text="Enter the question here:", font=("Calibri", 12, "bold"))
             self.dynamic_objects.append(lblQues)
             lblQues.grid(row=(self.number_questions + 5), column=0, sticky=SW)
@@ -193,6 +213,7 @@ class create_test(Frame):
                 else:
                     label_text = self.questions["Question_" + str(self.number_questions + 1)]
                 lblNew['text'] = ("Question " + str(self.number_questions + 1) + ": " + label_text)
+                self.question_labels.append(lblNew)
                 self.number_questions += 1
                 self.answers = []
                 self.cancel_question()
