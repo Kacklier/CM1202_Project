@@ -1,5 +1,4 @@
 from tkinter import *
-from test_db_template import Test
 from tkcalendar import DateEntry
 import csv
 import tkinter.messagebox

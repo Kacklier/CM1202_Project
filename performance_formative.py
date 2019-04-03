@@ -25,12 +25,19 @@ class performance_formative(Frame):
         self.txtDisplay.insert(END, "\t\t\t% of times answered correctly" + "\t\t\tQuestion most often answered incorrectly" + "\t\t\tNumber of attempts", 'boldfont')
         with open("tests\\tests.csv", 'r+', newline='') as csvFile:
             reader = list(csv.reader(csvFile))
+
             print(reader)
             for lst in reader:
                 if lst[0] == "TITLE":
-                    for d in self.tests:
-                        if not lst[1] == d["TITLE"]:
-                            self.tests.append({"TITLE": lst[1]})
+                    tests.append([])
+                tests[len(tests) - 1].append(lst)
+            #         titles = []
+            #         for d in self.tests:
+            #             titles.append(d["TITLE"])
+            #         if lst[1] in titles:
+
+                        # if lst[1] == d["TITLE"]:
+                        #     self.tests.append({"TITLE": lst[1]})
 
     def go_back(self):
         self.master.destroy()
