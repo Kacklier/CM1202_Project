@@ -27,11 +27,10 @@ class performance_formative(Frame):
             reader = list(csv.reader(csvFile))
             print(reader)
             for lst in reader:
-                flag = 0
                 if lst[0] == "TITLE":
                     for d in self.tests:
-                        if lst[1] == d["TITLE"]:
-                            flag = 1
+                        if not lst[1] == d["TITLE"]:
+                            self.tests.append({"TITLE": lst[1]})
 
     def go_back(self):
         self.master.destroy()
