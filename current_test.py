@@ -2,8 +2,9 @@ from tkinter import *
 from test_db_template import Test
 from tkcalendar import DateEntry
 import csv
+import tkinter.messagebox
 import time
-import datetime
+from datetime import datetime, timedelta
 
 
 class current_test(Frame):
@@ -17,7 +18,27 @@ class current_test(Frame):
 		self.read_test()
 		self.question_load()
 		self.init_button()
-		self.countdown()
+		self.create_timer()
+
+
+	def create_timer(self):
+		self.now = IntVar()
+		
+		self.time = Label(self, font=('Helvetica', 24))
+		self.time.grid(row=2, column=5)
+		self.time["textvariable"] = self.now
+		
+		self.time_start = int(self.test_data[self.startpoint + 3][1])*60
+		
+		self.auto_update()
+
+
+	def auto_update(self):
+		self.time_start -= 1
+		self.displaytime = timedelta(seconds=self.time_start)
+		self.now.set(self.displaytime)
+		self.after(1000, self.auto_update)
+	
 
 	def init_window(self, master):
 		master.title(self.choice)
@@ -310,24 +331,14 @@ class current_test(Frame):
 			btnSubmitForm = Button(self, text="Formative Submit", font=("Calibri", 12,), width=20, command=self.form_check)
 			btnSubmitForm.grid(row=15, column=3, columnspan=3)		
 
-	def countdown(self):
-		t = int((int(self.test_data[self.startpoint + 3][1]) * 60))
-		print(t)
-		while t:
-			mins, secs = divmod(t, 60)
-			timeformat = '{:02d}:{:02d}'.format(mins, secs)
-			txtTime = Label(self,text = timeformat, font=("Calibri", 12), height=2)
-			txtTime.grid(row=40, column=0, columnspan=2, sticky=W)
 
-			time.sleep(1)
-			t -= 1
 	
 	def sum_check(self):
-    
-
-
-		if current_time < self.test_data[self.startpoint + 3][1]:
+		if self.time_start > 0:
 			self.save_results()
+		else:
+			tkinter.messagebox.showwarning("Time has run out!")
+
 
 	def form_check(self):
 		pass
@@ -352,5 +363,3 @@ class current_test(Frame):
 			for i in range(0,self.question_count):
 				writer.writerow(["QUESTION_NO", questions[i]])
 				writer.writerow(["ANSWER", answers[i]])
-
-
