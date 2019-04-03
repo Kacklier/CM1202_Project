@@ -1,5 +1,6 @@
 from tkinter import *
 from create_test import create_test
+from performance import performance
 
 
 class lecturer_menu(Frame):
@@ -36,12 +37,10 @@ class lecturer_menu(Frame):
         t2.wm_protocol("WM_DELETE_WINDOW", self.previous.destroy)
 
     def open_performance(self):
-        pass
-        # STEPHANIE
-        # t2 = Toplevel(self.master)
-        # self.master.withdraw()
-        # [NAME](t2)
-        # t2.wm_protocol("WM_DELETE_WINDOW", self.previous.destroy)
+        t2 = Toplevel(self.master)
+        self.master.withdraw()
+        performance(t2, self.master)
+        t2.wm_protocol("WM_DELETE_WINDOW", self.previous.destroy)
 
     def open_modify(self):
         pass
