@@ -1,11 +1,12 @@
 #Author: Jamie
 from tkinter import *
-from create_test import create_test
+from performance_formative import performance_formative
 
 
 class performance(Frame):
-    def __init__(self, master, previous):
+    def __init__(self, master, previous, root):
         Frame.__init__(self, master)
+        self.root = root
         self.previous = previous
         self.grid()
         self.init_window()
@@ -28,10 +29,10 @@ class performance(Frame):
         t2 = Toplevel(self.master)
         self.master.withdraw()
         performance_formative(t2, self.master)
-        t2.wm_protocol("WM_DELETE_WINDOW", self.previous.destroy)
+        t2.wm_protocol("WM_DELETE_WINDOW", self.root.destroy)
 
     def open_performance_summative(self):
         t2 = Toplevel(self.master)
         self.master.withdraw()
         performance_summative(t2)
-        t2.wm_protocol("WM_DELETE_WINDOW", self.previous.destroy)
+        t2.wm_protocol("WM_DELETE_WINDOW", self.root.destroy)
