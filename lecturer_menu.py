@@ -39,7 +39,7 @@ class lecturer_menu(Frame):
     def open_performance(self):
         t2 = Toplevel(self.master)
         self.master.withdraw()
-        performance(t2, self.master)
+        performance(t2, self.master, self.previous)
         t2.wm_protocol("WM_DELETE_WINDOW", self.previous.destroy)
 
     def open_modify(self):
