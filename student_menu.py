@@ -13,6 +13,10 @@ class student_menu(Frame):
 		self.init_window(master)
 		self.init_title()
 		self.read_test()
+		self.select_type()
+		self.init_buttons()
+		self.init_radio()
+		self.fill_table()
 
 	def init_window(self, master):
 		master.title("Select a test")
@@ -22,24 +26,27 @@ class student_menu(Frame):
 		lblTitle = Label(self, text="Please choose a test:", font=("Calibri", 12, "bold"))
 		lblTitle.grid(row=0, column=0, sticky=W)
 
+	def init_radio(self):
+
+		self.varforsum = IntVar()
+		self.varforsum.set(1)
+		rdoForm = Radiobutton(self, text= "formative", variable=self.varforsum, value=1)
+		rdoForm.grid(row=5, column=3, columnspan=1)
+
+		rdoSum = Radiobutton(self, text= "summative", variable=self.varforsum, value=2)
+		rdoSum.grid(row=5, column=4, columnspan=1)
 
 	def read_test(self):
-		test_data = []
-		titles = list()
+		self.test_data = []
+		self.titles = list()
 		with open('tests\\tests.csv', newline='') as test_file:
-			test_data = list(csv.reader(test_file))
+			self.test_data = list(csv.reader(test_file))
 
-		for key in test_data:
-			print(key)
+		for key in self.test_data:
 			if key[0] == "TITLE":
-				titles.append(key[1])
+				self.titles.append(key[1])
 
-
-		#these can be removed soon
-		print(test_data)
-		print(titles)
-		print(test_data[1][0])
-
+	def fill_table(self):
 		self.listProg = Listbox(self,height=3)
 		scroll = Scrollbar(self,command=self.listProg.yview)
 		self.listProg.configure(yscrollcommand=scroll.set)
@@ -47,21 +54,47 @@ class student_menu(Frame):
 		self.listProg.grid(row=0,column=2, columnspan=2, sticky=NE)
 		scroll.grid(row=0,column=4,sticky=W)
 
-		for item in titles:
-			self.listProg.insert(END, item)
+		if self.varforsum.get() == 1:
+			for item in self.summative:
+				self.listProg.insert(END, item)
+		elif self.varforsum.get() == 2:
+			for item in self.formative:
+				self.listProg.insert(END, item)
+
 
 		self.listProg.selection_set(END)
 		
-		btnSubmit = Button(self, text="Submit", font=("Calibri", 12,), width=20, command=self.open_test)
-		btnSubmit.grid(row=4, column=3, columnspan=3)
 
+	def init_buttons(self):
+		btnOpen = Button(self, text="Open", font=("Calibri", 12,), width=20, command=self.open_test)
+		btnOpen.grid(row=4, column=1, columnspan=3)
 
+		btnReload = Button(self, text="Reload", font=("Calibri", 12,), width=20, command=self.fill_table)
+		btnReload.grid(row=4, column=4, columnspan=3)
 
 	def open_test(self, master=None):
 		choice = self.listProg.get(ANCHOR)
-		print(choice)
 		if choice == "":
 			tkinter.messagebox.showwarning("Entry Error, please select a test")
 		else:
 			t1 = Toplevel(self)
 			current_test(t1, choice)
+
+	def select_type(self):
+		self.summative = list()
+		self.formative = list()
+		count = len(self.test_data)
+		titlecount = len(self.titles)
+		for i in range(0, count):
+			if self.test_data[i][0] == "TYPE":
+				for items in range(0, titlecount):
+					if self.titles[items] == self.test_data[i-1][1]:
+						print(self.titles[items])
+						print(self.test_data[i-1][1])
+						print(self.test_data[i][1])
+						if self.test_data[i][1] == "summative":
+							self.summative.append(self.titles[items])
+							print(self.summative)
+						if self.test_data[i][1] == "formative":
+							self.formative.append(self.titles[items])
+							print(self.formative)
