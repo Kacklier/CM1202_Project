@@ -32,7 +32,7 @@ class DisplayRoot(Frame):
         root.withdraw()
 # TODO:
 # create_test will need to be changed to lecturer_menu (or similar), which in turn can lead to create_test
-        create_test(t1)
+        create_test(t1, root)
         t1.wm_protocol("WM_DELETE_WINDOW", root.destroy)
 
     def open_student_menu(self):
