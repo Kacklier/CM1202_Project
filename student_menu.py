@@ -6,7 +6,7 @@ import csv
 import datetime
 
 class student_menu(Frame):
-	
+
 	def __init__(self, master):
 		Frame.__init__(self, master)
 		self.grid()
@@ -30,10 +30,10 @@ class student_menu(Frame):
 
 		self.varforsum = IntVar()
 		self.varforsum.set(1)
-		rdoForm = Radiobutton(self, text= "formative", variable=self.varforsum, value=1)
+		rdoForm = Radiobutton(self, text= "Summative", variable=self.varforsum, value=1)
 		rdoForm.grid(row=5, column=3, columnspan=1)
 
-		rdoSum = Radiobutton(self, text= "summative", variable=self.varforsum, value=2)
+		rdoSum = Radiobutton(self, text= "Formative", variable=self.varforsum, value=2)
 		rdoSum.grid(row=5, column=4, columnspan=1)
 
 	def read_test(self):
@@ -63,7 +63,7 @@ class student_menu(Frame):
 
 
 		self.listProg.selection_set(END)
-		
+
 
 	def init_buttons(self):
 		btnOpen = Button(self, text="Open", font=("Calibri", 12,), width=20, command=self.open_test)

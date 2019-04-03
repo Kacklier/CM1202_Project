@@ -5,16 +5,15 @@ from tkcalendar import DateEntry
 import csv
 import datetime
 
-number_questions = 0
-number_answers = 0
-dynamic_objects = []
-questions = {}
-answers = []
-
 
 class create_test(Frame):
     def __init__(self, master, previous):
         Frame.__init__(self, master)
+        self.number_questions = 0
+        self.number_answers = 0
+        self.dynamic_objects = []
+        self.questions = {}
+        self.answers = []
         self.previous = previous
         self.grid()
         self.init_window()
@@ -79,19 +78,18 @@ class create_test(Frame):
         chkCheck.grid(row=4, column=1, sticky=E, columnspan=2)
 
     def init_buttons(self):
-        global dynamic_objects
         btnAdd = Button(self, text="Add a question", font=("Calibri", 12), width=16, height=1)
         btnAdd['command'] = self.add_question
-        btnAdd.grid(row=(number_questions + 5), column=0, columnspan=2)
+        btnAdd.grid(row=(self.number_questions + 5), column=0, columnspan=2)
         btnSubmit = Button(self, text="Submit test", font=("Calibri", 12), width=16, height=1)
         btnSubmit['command'] = self.submit_test
-        btnSubmit.grid(row=(number_questions + 5), column=2, columnspan=2)
+        btnSubmit.grid(row=(self.number_questions + 5), column=2, columnspan=2)
         btnBack = Button(self, text="Cancel", font=("Calibri", 12), width=10, height=1)
         btnBack['command'] = self.test_cancel
-        btnBack.grid(row=(number_questions + 5), column=0, sticky=W)
-        dynamic_objects.append(btnBack)
-        dynamic_objects.append(btnAdd)
-        dynamic_objects.append(btnSubmit)
+        btnBack.grid(row=(self.number_questions + 5), column=0, sticky=W)
+        self.dynamic_objects.append(btnBack)
+        self.dynamic_objects.append(btnAdd)
+        self.dynamic_objects.append(btnSubmit)
 
     def test_cancel(self):
         msgBox = messagebox.askquestion("Cancel", "Are you sure you want to cancel creating the assessment?", icon="warning")
@@ -100,150 +98,142 @@ class create_test(Frame):
             self.previous.deiconify()
 
     def add_question(self):
-        global number_questions
-        if number_questions == 10:
+        if self.number_questions == 10:
             messagebox.showerror("Error", "You can only have up to 10 questions")
         else:
-            dynamic_objects[2].destroy()
-            dynamic_objects[1].destroy()
-            dynamic_objects[0].destroy()
-            dynamic_objects.remove(dynamic_objects[2])
-            dynamic_objects.remove(dynamic_objects[1])
-            dynamic_objects.remove(dynamic_objects[0])
+            self.dynamic_objects[2].destroy()
+            self.dynamic_objects[1].destroy()
+            self.dynamic_objects[0].destroy()
+            self.dynamic_objects.remove(self.dynamic_objects[2])
+            self.dynamic_objects.remove(self.dynamic_objects[1])
+            self.dynamic_objects.remove(self.dynamic_objects[0])
             lblQues = Label(self, text="Enter the question here:", font=("Calibri", 12, "bold"))
-            dynamic_objects.append(lblQues)
-            lblQues.grid(row=(number_questions + 5), column=0, sticky=SW)
+            self.dynamic_objects.append(lblQues)
+            lblQues.grid(row=(self.number_questions + 5), column=0, sticky=SW)
             self.txtQues = Text(self, font=("Calibri", 12), width=35, height=4)
-            dynamic_objects.append(self.txtQues)
+            self.dynamic_objects.append(self.txtQues)
             scrlQues = Scrollbar(self, command=self.txtQues.yview)
-            dynamic_objects.append(scrlQues)
+            self.dynamic_objects.append(scrlQues)
             self.txtQues['yscrollcommand'] = scrlQues.set
-            self.txtQues.grid(row=(number_questions + 5), column=1, columnspan=2, rowspan=2, sticky=W)
-            scrlQues.grid(row=(number_questions + 5), column=3, columnspan=3, rowspan=2)
+            self.txtQues.grid(row=(self.number_questions + 5), column=1, columnspan=2, rowspan=2, sticky=W)
+            scrlQues.grid(row=(self.number_questions + 5), column=3, columnspan=3, rowspan=2)
             self.answer_correct = IntVar()
             self.answer_correct.set(1)
             self.add_question_buttons()
 
     def add_question_buttons(self):
-        global dynamic_objects
         btnFinishQ = Button(self, text="Finish Question", font=("Calibri", 10))
         btnFinishQ['command'] = self.finish_question
-        btnFinishQ.grid(row=(number_questions + number_answers + 7), column=1, sticky=E)
+        btnFinishQ.grid(row=(self.number_questions + self.number_answers + 7), column=1, sticky=E)
         btnRemoveAns = Button(self, text="Remove answer", font=("Calibri", 10))
         btnRemoveAns['command'] = self.remove_answer
-        btnRemoveAns.grid(row=(number_questions + number_answers + 7), column=0, sticky=E)
+        btnRemoveAns.grid(row=(self.number_questions + self.number_answers + 7), column=0, sticky=E)
         btnAddAns = Button(self, text="Add an answer", font=("Calibri", 10))
         btnAddAns['command'] = self.add_answer
-        btnAddAns.grid(row=(number_questions + number_answers + 7), column=0, sticky=W)
+        btnAddAns.grid(row=(self.number_questions + self.number_answers + 7), column=0, sticky=W)
         btnCancel = Button(self, text="Cancel the question", font=("Calibri", 10))
         btnCancel['command'] = self.cancel_question
-        btnCancel.grid(row=(number_questions + number_answers + 7), column=2, sticky=E)
-        dynamic_objects.append(btnRemoveAns)
-        dynamic_objects.append(btnFinishQ)
-        dynamic_objects.append(btnAddAns)
-        dynamic_objects.append(btnCancel)
+        btnCancel.grid(row=(self.number_questions + self.number_answers + 7), column=2, sticky=E)
+        self.dynamic_objects.append(btnRemoveAns)
+        self.dynamic_objects.append(btnFinishQ)
+        self.dynamic_objects.append(btnAddAns)
+        self.dynamic_objects.append(btnCancel)
 
     def cancel_question(self):
-        global number_answers
-        for i in range(len(dynamic_objects) - 1, -1, -1):
-            dynamic_objects[i].destroy()
-            dynamic_objects.remove(dynamic_objects[i])
-        number_answers = 0
+        for i in range(len(self.dynamic_objects) - 1, -1, -1):
+            self.dynamic_objects[i].destroy()
+            self.dynamic_objects.remove(self.dynamic_objects[i])
+        self.number_answers = 0
         self.init_buttons()
 
     def add_answer(self):
-        global anwsers
-        global number_answers
-        if number_answers == 6:
+        if self.number_answers == 6:
             messagebox.showerror("Error", "There can only be up to 6 answers")
         else:
-            for i in range(len(dynamic_objects) - 1, len(dynamic_objects) - 5, -1):
-                dynamic_objects[i].destroy()
-                dynamic_objects.remove(dynamic_objects[i])
+            for i in range(len(self.dynamic_objects) - 1, len(self.dynamic_objects) - 5, -1):
+                self.dynamic_objects[i].destroy()
+                self.dynamic_objects.remove(self.dynamic_objects[i])
             self.answer_obj = []
-            self.answer_obj.append(Label(self, text=("Answer " + str(number_answers + 1) + ":"), font=("Calibri", 12, "bold")))
-            self.answer_obj[0].grid(row=(number_questions + number_answers + 7), column=0, sticky=W)
+            self.answer_obj.append(Label(self, text=("Answer " + str(self.number_answers + 1) + ":"), font=("Calibri", 12, "bold")))
+            self.answer_obj[0].grid(row=(self.number_questions + self.number_answers + 7), column=0, sticky=W)
             self.answer_obj.append(Entry(self, width=20, font=("Calibri", 12)))
-            self.answer_obj[1].grid(row=(number_questions + number_answers + 7), column=1, sticky=W)
-            self.answer_obj.append(Radiobutton(self, text="Correct", font=("Calibri", 12), variable=self.answer_correct, value=(number_answers + 1)))
-            self.answer_obj[2].grid(row=(number_questions + number_answers + 7), column=2)
-            answers.append(self.answer_obj[:])
-            number_answers += 1
+            self.answer_obj[1].grid(row=(self.number_questions + self.number_answers + 7), column=1, sticky=W)
+            self.answer_obj.append(Radiobutton(self, text="Correct", font=("Calibri", 12), variable=self.answer_correct, value=(self.number_answers + 1)))
+            self.answer_obj[2].grid(row=(self.number_questions + self.number_answers + 7), column=2)
+            self.answers.append(self.answer_obj[:])
+            self.number_answers += 1
 
             for obj in self.answer_obj:
-                dynamic_objects.append(obj)
+                self.dynamic_objects.append(obj)
             self.add_question_buttons()
 
     def finish_question(self):
-        global number_questions
-        global answers
         if self.txtQues.get("1.0", "end-1c") == '':
             messagebox.showerror("Error", "Please enter a question")
-        elif answers == []:
+        elif self.answers == []:
             messagebox.showerror("Error", "Make sure there is at least 1 answer")
         else:
             flag = 0
-            for lst in answers:
+            for lst in self.answers:
                 if lst[1].get() == '':
                     flag = 1
                     messagebox.showerror("Error", "Make sure that each answer is filled in")
             if flag == 0:
-                questions["Question_" + str(number_questions + 1)] = self.txtQues.get("1.0", "end-1c")
+                self.questions["Question_" + str(self.number_questions + 1)] = self.txtQues.get("1.0", "end-1c")
                 lstAns = []
-                for lst in answers:
+                for lst in self.answers:
                     lstAns.append(lst[1].get())
-                questions["Answers_" + str(number_questions + 1)] = lstAns
-                questions["Correct_Ans_" + str(number_questions + 1)] = self.answer_correct.get()
+                self.questions["Answers_" + str(self.number_questions + 1)] = lstAns
+                self.questions["Correct_Ans_" + str(self.number_questions + 1)] = self.answer_correct.get()
                 lblNew = Label(self, font=("Calibri", 12))
-                lblNew.grid(row=(number_questions + 5), column=0, columnspan=4, sticky=W)
+                lblNew.grid(row=(self.number_questions + 5), column=0, columnspan=4, sticky=W)
                 label_text = ""
-                if len(questions["Question_" + str(number_questions + 1)]) >= 36:
-                    label_text = questions["Question_" + str(number_questions + 1)][:33] + "..."
+                if len(self.questions["Question_" + str(self.number_questions + 1)]) >= 36:
+                    label_text = self.questions["Question_" + str(self.number_questions + 1)][:33] + "..."
                 else:
-                    label_text = questions["Question_" + str(number_questions + 1)]
-                lblNew['text'] = ("Question " + str(number_questions + 1) + ": " + label_text)
-                number_questions += 1
-                answers = []
+                    label_text = self.questions["Question_" + str(self.number_questions + 1)]
+                lblNew['text'] = ("Question " + str(self.number_questions + 1) + ": " + label_text)
+                self.number_questions += 1
+                self.answers = []
                 self.cancel_question()
 
     def remove_answer(self):
-        global number_answers
-        global answers
-        if not answers == []:
-            for i in range(len(dynamic_objects) - 1, len(dynamic_objects) - 8, -1):
-                dynamic_objects[i].destroy()
-                dynamic_objects.remove(dynamic_objects[i])
-            answers.remove(answers[len(answers) - 1])
-            number_answers -= 1
+        if not self.answers == []:
+            for i in range(len(self.dynamic_objects) - 1, len(self.dynamic_objects) - 8, -1):
+                self.dynamic_objects[i].destroy()
+                self.dynamic_objects.remove(self.dynamic_objects[i])
+            self.answers.remove(self.answers[len(self.answers) - 1])
+            self.number_answers -= 1
             self.add_question_buttons()
 
     def submit_test(self):
-        global number_questions
-        if questions == {}:
-            messagebox.showerror("Error", "Please create at least one question")
-        else:
-            with open('tests\\tests.csv', 'r+', newline='') as csvFile:
-                writer = csv.writer(csvFile)
-                reader = csv.reader(csvFile)
-                counter = 1
-                for line in reader:
-                    if line[0] == "TEST":
-                        counter += 1
-                writer.writerow(["TEST", counter])
-                writer.writerow(["TITLE", self.inpTitle.get()])
-                writer.writerow(["TYPE", self.varType.get()])
-                writer.writerow(["DURATION", self.varDuration.get()])
-                writer.writerow(["DATES", self.calStart.get(), self.calEnd.get()])
-                writer.writerow(["USE_DATES", self.varDates.get()])
-                for i in range(1, number_questions + 1):
-                    writer.writerow(["QUESTION_NO", i])
-                    writer.writerow(["QUESTION", questions["Question_" + str(i)]])
+        msgBox = messagebox.askquestion("Submit", "Are you sure you want to submit the assessment?")
+        if msgBox == 'yes':
+            if self.questions == {}:
+                messagebox.showerror("Error", "Please create at least one question")
+            else:
+                with open('tests\\tests.csv', 'r+', newline='') as csvFile:
+                    writer = csv.writer(csvFile)
+                    reader = csv.reader(csvFile)
                     counter = 1
-                    for ans in questions["Answers_" + str(i)]:
-                        if ans == questions["Answers_" + str(i)][questions["Correct_Ans_" + str(i)] - 1]:
-                            writer.writerow(["ANSWER_" + str(counter), ans, 1])
-                        else:
-                            writer.writerow(["ANSWER_" + str(counter), ans, 0])
-                        counter += 1
-            self.master.destroy()
-            self.previous.deiconify()
+                    for line in reader:
+                        if line[0] == "TEST":
+                            counter += 1
+                    writer.writerow(["TEST", counter])
+                    writer.writerow(["TITLE", self.inpTitle.get()])
+                    writer.writerow(["TYPE", self.varType.get()])
+                    writer.writerow(["DURATION", self.varDuration.get()])
+                    writer.writerow(["DATES", self.calStart.get(), self.calEnd.get()])
+                    writer.writerow(["USE_DATES", self.varDates.get()])
+                    for i in range(1, self.number_questions + 1):
+                        writer.writerow(["QUESTION_NO", i])
+                        writer.writerow(["QUESTION", self.questions["Question_" + str(i)]])
+                        counter = 1
+                        for ans in self.questions["Answers_" + str(i)]:
+                            if ans == self.questions["Answers_" + str(i)][self.questions["Correct_Ans_" + str(i)] - 1]:
+                                writer.writerow(["ANSWER_" + str(counter), ans, 1])
+                            else:
+                                writer.writerow(["ANSWER_" + str(counter), ans, 0])
+                            counter += 1
+                self.master.destroy()
+                self.previous.deiconify()
