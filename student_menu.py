@@ -76,7 +76,7 @@ class student_menu(Frame):
 	def open_test(self, master=None):
 		choice = self.listProg.get(ANCHOR)
 		if choice == "":
-			tkinter.messagebox.showwarning("Entry Error, please select a test")
+			tkinter.messagebox.showwarning("Entry Error", "Please select a test")
 		else:
 			t1 = Toplevel(self)
 			current_test(t1, choice, self.varforsum.get())

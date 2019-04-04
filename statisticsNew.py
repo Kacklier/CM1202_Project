@@ -58,7 +58,6 @@ def generateTotalMark(correctAnsLst,studentResult):
     return totalMark,studentNum
 
 generateTotalMark(correctAnsLst,studentResult)
-print(totalMark,studentNum)
 
 percentageDict={}
 
