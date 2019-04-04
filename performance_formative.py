@@ -7,6 +7,7 @@ class performance_formative(Frame):
         Frame.__init__(self, master)
         self.results = []
         self.tests = []
+        self.results_final = []
         self.previous = previous
         self.grid()
         self.get_data()
@@ -42,6 +43,7 @@ class performance_formative(Frame):
             if lst[2][1] == "summative":
                 self.tests.remove(lst)
 
+        mean = 0
         print(self.results)
         print(self.tests)
 

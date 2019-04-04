@@ -1,3 +1,4 @@
+#Author: Jack
 from tkinter import *
 from tkcalendar import DateEntry
 import csv
@@ -94,6 +95,10 @@ class current_test(Frame):
 		self.inpName = Entry(self, width=35, font=("Calibri", 12))
 		self.inpName.grid(row=3, column=1, sticky=W)
 		self.questionstart = self.startpoint + 7
+
+		self.varCB1 = IntVar()
+		CB1 = Checkbutton(self,text="Final Attempt", variable=self.varCB1)
+		CB1.grid(row=14,column=0,columnspan=4,sticky=W)
 
 	def question_load(self):
 		self.varA1 = IntVar()
@@ -339,10 +344,15 @@ class current_test(Frame):
 
 
 	def form_check(self):
-		pass
+		if self.time_start > 0:
+			self.final_attempt()
+		else:
+			tkinter.messagebox.showwarning("Time has run out!")
+		
 
 
 	def save_results(self):
+<<<<<<< HEAD
 		with open('tests\\results.csv', 'r+', newline='') as results_file:
 			writer = csv.writer(results_file)
 			reader = csv.reader(results_file)
@@ -357,7 +367,35 @@ class current_test(Frame):
 
 			questions = [1,2,3,4,5,6,7,8,9,10]
 			answers = [self.varA1.get(), self.varA2.get(), self.varA3.get(), self.varA4.get(), self.varA5.get(), self.varA6.get(), self.varA7.get(), self.varA8.get(), self.varA9.get(), self.varA10.get()]
+=======
+		if self.inpName == "":
+			tkinter.messagebox.showwarning("Please input Name")
+		else:
+			with open('tests\\results.csv', 'r+', newline='') as results_file:
+				writer = csv.writer(results_file)
+				reader = csv.reader(results_file)
+				counter = 1
+				for line in reader:
+					if line[0] == "TEST":
+						counter += 1
+				writer.writerow(["TEST", counter])
+				writer.writerow(["TITLE", self.test_data[self.startpoint + 1][1]])
+				writer.writerow(["NAME", self.inpName.get()])
+				writer.writerow(["TYPE", self.test_data[self.startpoint + 2][1]])
+				
+				questions = [1,2,3,4,5,6,7,8,9,10]
+				answers = [self.varA1.get(), self.varA2.get(), self.varA3.get(), self.varA4.get(), self.varA5.get(), self.varA6.get(), self.varA7.get(), self.varA8.get(), self.varA9.get(), self.varA10.get()]
 
-			for i in range(0,self.question_count):
-				writer.writerow(["QUESTION_NO", questions[i]])
-				writer.writerow(["ANSWER", answers[i]])
+				for i in range(0,self.question_count):
+					writer.writerow(["QUESTION_NO", questions[i]])
+					writer.writerow(["ANSWER", answers[i]])
+			tkinter.messagebox.showwarning("Saved")
+
+	def final_attempt(self):
+		print(self.varCB1.get())
+		if self.varCB1.get() == 1:
+			self.save_results()
+		else:
+			tkinter.messagebox.showwarning("Results Not Saved")
+>>>>>>> 4c2ed8416c702e308db671ffbf02651862e53788
+
