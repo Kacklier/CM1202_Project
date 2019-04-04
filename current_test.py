@@ -5,7 +5,7 @@ import csv
 import tkinter.messagebox
 import time
 from datetime import datetime, timedelta
-
+self.completed = False
 
 class current_test(Frame):
 	
@@ -339,7 +339,10 @@ class current_test(Frame):
 	
 	def sum_check(self):
 		if self.time_start > 0:
-			self.save_results()
+			if self.completed == False:
+				self.save_results()
+			else:
+				tkinter.messagebox.showwarning("Cannot submit twice!")
 		else:
 			tkinter.messagebox.showwarning("Time has run out!")
 
@@ -375,6 +378,10 @@ class current_test(Frame):
 					writer.writerow(["QUESTION_NO", questions[i]])
 					writer.writerow(["ANSWER", answers[i]])
 			tkinter.messagebox.showwarning("Saved")
+			if self.FormSum == 1:
+				self.completed = True
+		
+ 
 
 	def final_attempt(self):
 		print(self.varCB1.get())
