@@ -1,7 +1,6 @@
 #Author: Jamie
 from tkinter import *
 from performance_formative import performance_formative
-from statisticsNew import *
 
 
 class performance(Frame):
@@ -25,12 +24,23 @@ class performance(Frame):
         btnSumm = Button(self, text="View Performance on Summative Assessments", wraplength=100, font=("Calibri", 14), width=30, height=5)
         btnSumm['command'] = self.open_performance_summative
         btnSumm.grid(row=0, column=1)
+        btnBack = btnForm = Button(self, text="Go Back", font=("Calibri", 14), width=15, height=2)
+        btnBack['command'] = self.go_back
+        btnBack.grid(row=1, column=0, columnspan=2)
+
 
     def open_performance_formative(self):
-        openS()
+        t2 = Toplevel(self.master)
+        self.master.withdraw()
+        performance_formative(t2, self.master)
+        t2.wm_protocol("WM_DELETE_WINDOW", self.root.destroy)
 
     def open_performance_summative(self):
         t2 = Toplevel(self.master)
         self.master.withdraw()
         performance_summative(t2)
         t2.wm_protocol("WM_DELETE_WINDOW", self.root.destroy)
+
+    def go_back(self):
+        self.master.destroy()
+        self.previous.deiconify()
