@@ -67,6 +67,7 @@ class view_summative(Frame):
 
     def showData(self, *args):
         idxs = self.lbox.curselection()
+        print(self.studentnames)
         if len(idxs) == 1:
             idx = int(idxs[0])
             student_name = self.studentnames[idx]
@@ -75,8 +76,6 @@ class view_summative(Frame):
         self.sentmsg.set('')
 
     def displayRes(self, *args):
-        self.studentnames = []
-        self.studentresults = {}
         idxs = self.lbox.curselection()
         if len(idxs) == 1:
             idx = int(idxs[0])
