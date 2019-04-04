@@ -147,14 +147,17 @@ class modify_menu(Frame):
 
 
         def init_buttons(self):
-                btnDel = Button(self, text="Delete Assessment", font=("Calibri", 12,), width=20, command=self.del_ass)
+                btnDel = Button(self, text="Delete Assessment", font=("Calibri", 12), width=20, command=self.del_ass)
                 btnDel.grid(row=4, column=1, columnspan=2)
 
-                btnEdit = Button(self, text="Edit Assessment", font=("Calibri", 12,), width=20, command=self.fill_second_table)
+                btnEdit = Button(self, text="Edit Assessment", font=("Calibri", 12), width=20, command=self.fill_second_table)
                 btnEdit.grid(row=4, column=3, columnspan=2)
 
-                btnRel = Button(self, text="Reload", font=("Calibri", 12,), width=20, command=self.fill_table)
+                btnRel = Button(self, text="Reload", font=("Calibri", 12), width=20, command=self.fill_table)
                 btnRel.grid(row=4, column=5, columnspan=2)
+
+                btnBack = Button(self, text="Back", font=("Calibri", 12), width=10, command=self.go_back)
+                btnBack.grid(row=4, column=7, columnspan=2)
 
         
 
@@ -208,4 +211,7 @@ class modify_menu(Frame):
                         writer = csv.writer(csvFile)
                         writer.writerows(new_data)
 
+        def go_back(self):
+                self.master.destroy()
+                self.previous.deiconify()
 
