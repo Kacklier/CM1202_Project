@@ -5,9 +5,11 @@ import csv
 class performance_formative(Frame):
     def __init__(self, master, previous):
         Frame.__init__(self, master)
+        self.results = []
         self.tests = []
         self.previous = previous
         self.grid()
+        self.get_data()
         self.init_window()
 
     def init_window(self):
@@ -23,21 +25,31 @@ class performance_formative(Frame):
         btnBack.grid(row=1, column=0)
 
         self.txtDisplay.insert(END, "\t\t\t% of times answered correctly" + "\t\t\tQuestion most often answered incorrectly" + "\t\t\tNumber of attempts", 'boldfont')
-        with open("tests\\tests.csv", 'r+', newline='') as csvFile:
-            reader = list(csv.reader(csvFile))
 
-            print(reader)
-            for lst in reader:
+        for lst in self.resreader:
+            if not lst[0] == "TEST":
                 if lst[0] == "TITLE":
-                    tests.append([])
-                tests[len(tests) - 1].append(lst)
-            #         titles = []
-            #         for d in self.tests:
-            #             titles.append(d["TITLE"])
-            #         if lst[1] in titles:
+                    self.results.append([])
+                self.results[len(self.results) - 1].append(lst)
+        for lst in self.results:
+            if lst[2][1] == "summative":
+                self.results.remove(lst)
+        for lst in self.testreader:
+            if lst[0] == "TEST":
+                self.tests.append([])
+            self.tests[len(self.tests) - 1].append(lst)
+        for lst in self.tests:
+            if lst[2][1] == "summative":
+                self.tests.remove(lst)
 
-                        # if lst[1] == d["TITLE"]:
-                        #     self.tests.append({"TITLE": lst[1]})
+        print(self.results)
+        print(self.tests)
+
+    def get_data(self):
+        with open("tests\\results.csv", 'r+', newline='') as csvFile:
+            self.resreader = list(csv.reader(csvFile))
+        with open("tests\\tests.csv", 'r+', newline='') as csvFile:
+            self.testreader = list(csv.reader(csvFile))
 
     def go_back(self):
         self.master.destroy()
