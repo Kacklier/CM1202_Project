@@ -339,7 +339,7 @@ class current_test(Frame):
 	def sum_check(self):
 		if self.time_start > 0:
 			if self.completed == False:
-				self.save_results()
+				self.save_results_sum()
 			else:
 				tkinter.messagebox.showwarning("Cannot submit twice!")
 		else:

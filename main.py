@@ -35,7 +35,7 @@ class DisplayRoot(Frame):
     def open_student_menu(self):
         t1 = Toplevel(root)
         root.withdraw()
-        student_menu(t1)
+        student_menu(t1, root)
         t1.wm_protocol("WM_DELETE_WINDOW", root.destroy)
 
 

@@ -6,10 +6,11 @@ import tkinter.messagebox
 import csv
 import datetime
 
+
 class student_menu(Frame):
-	
-	def __init__(self, master):
+	def __init__(self, master, previous):
 		Frame.__init__(self, master)
+		self.previous = previous
 		self.grid()
 		self.init_window(master)
 		self.init_title()
@@ -22,6 +23,7 @@ class student_menu(Frame):
 	def init_window(self, master):
 		master.title("Select a test")
 		master.minsize(506, 0)
+		master.resizable(width=False, height=False)
 
 	def init_title(self):
 		lblTitle = Label(self, text="Please choose a test:", font=("Calibri", 12, "bold"))
@@ -64,7 +66,7 @@ class student_menu(Frame):
 
 
 		self.listProg.selection_set(END)
-		
+
 
 	def init_buttons(self):
 		btnOpen = Button(self, text="Open", font=("Calibri", 12,), width=20, command=self.open_test)
@@ -72,6 +74,9 @@ class student_menu(Frame):
 
 		btnReload = Button(self, text="Reload", font=("Calibri", 12,), width=20, command=self.fill_table)
 		btnReload.grid(row=4, column=4, columnspan=3)
+
+		btnBack = Button(self, text="Back", font=("Calibri", 12), width=10, command=self.go_back)
+		btnBack.grid(row=0, column=4, sticky=E, rowspan=2)
 
 	def open_test(self, master=None):
 		choice = self.listProg.get(ANCHOR)
@@ -89,8 +94,12 @@ class student_menu(Frame):
 		for i in range(0, count):
 			if self.test_data[i][0] == "TYPE":
 				for items in range(0, titlecount):
-					if self.titles[items] == self.test_data[i-1][1]:
+					if self.titles[items] == self.test_data[i - 1][1]:
 						if self.test_data[i][1] == "summative":
 							self.summative.append(self.titles[items])
 						if self.test_data[i][1] == "formative":
 							self.formative.append(self.titles[items])
+
+	def go_back(self):
+		self.master.destroy()
+		self.previous.deiconify()
