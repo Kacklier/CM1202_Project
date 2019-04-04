@@ -330,13 +330,12 @@ class current_test(Frame):
 	def init_button(self):
 		if self.FormSum == 1:
 			btnSubmitSum = Button(self, text="Summative Submit", font=("Calibri", 12,), width=20, command=self.sum_check)
-			btnSubmitSum.grid(row=15, column=3, columnspan=3)	
+			btnSubmitSum.grid(row=15, column=3, columnspan=3)
 		elif self.FormSum == 2:
 			btnSubmitForm = Button(self, text="Formative Submit", font=("Calibri", 12,), width=20, command=self.form_check)
-			btnSubmitForm.grid(row=15, column=3, columnspan=3)		
+			btnSubmitForm.grid(row=15, column=3, columnspan=3)
 
 
-	
 	def sum_check(self):
 		if self.time_start > 0:
 			if self.completed == False:
@@ -356,6 +355,22 @@ class current_test(Frame):
 
 
 	def save_results(self):
+<<<<<<< HEAD
+		with open('tests\\results.csv', 'r+', newline='') as results_file:
+			writer = csv.writer(results_file)
+			reader = csv.reader(results_file)
+			counter = 1
+			for line in reader:
+				if line[0] == "TEST":
+					counter += 1
+			writer.writerow(["TEST", counter])
+			writer.writerow(["TITLE", self.test_data[self.startpoint + 1][1]])
+			writer.writerow(["NAME", self.inpName.get()])
+			writer.writerow(["TYPE", self.test_data[self.startpoint + 2][1]])
+
+			questions = [1,2,3,4,5,6,7,8,9,10]
+			answers = [self.varA1.get(), self.varA2.get(), self.varA3.get(), self.varA4.get(), self.varA5.get(), self.varA6.get(), self.varA7.get(), self.varA8.get(), self.varA9.get(), self.varA10.get()]
+=======
 		if self.inpName == "":
 			tkinter.messagebox.showwarning("Please input Name")
 		else:
@@ -389,4 +404,5 @@ class current_test(Frame):
 			self.save_results()
 		else:
 			tkinter.messagebox.showwarning("Results Not Saved")
+>>>>>>> 4c2ed8416c702e308db671ffbf02651862e53788
 
