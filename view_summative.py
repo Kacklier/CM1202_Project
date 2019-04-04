@@ -6,6 +6,7 @@ from resultworker import *
 
 class view_summative(Frame):
     def __init__(self, master, previous):
+        self.previous = previous
         self.master = master
         self.studentnames = []
         self.studentresults = {}
@@ -29,9 +30,11 @@ class view_summative(Frame):
         self.lbox = Listbox(c)
         self.lbox.insert("end", *self.studentnames)
 
+
         lbl = ttk.Label(c, text="Display students by assessment type:")
         g2 = ttk.Radiobutton(c, text=self.sortType['summative'], variable=self.sortby, value='summative')
         send = ttk.Button(c, text='Display Results', command=self.displayRes, default='active')
+        back = ttk.Button(c, text='Go Back', command=self.go_back, default='active')
         sentlbl = ttk.Label(c, textvariable=self.sentmsg, anchor='center')
         status = ttk.Label(c, textvariable=self.statusmsg, anchor=W)
 
@@ -40,6 +43,7 @@ class view_summative(Frame):
         lbl.grid(column=1, row=0, padx=10, pady=5)
         g2.grid(column=1, row=2, sticky=W, padx=20)
         send.grid(column=2, row=4, sticky=E)
+        back.grid(column=2, row=5, sticky=E)
         sentlbl.grid(column=1, row=5, columnspan=2, sticky=N, pady=5, padx=5)
         status.grid(column=0, row=6, columnspan=2, sticky=EW)
         c.grid_columnconfigure(0, weight=1)
@@ -67,7 +71,6 @@ class view_summative(Frame):
 
     def showData(self, *args):
         idxs = self.lbox.curselection()
-        print(self.studentnames)
         if len(idxs) == 1:
             idx = int(idxs[0])
             student_name = self.studentnames[idx]
@@ -93,3 +96,7 @@ class view_summative(Frame):
         self.statusmsg.set('')
         self.lbox.selection_set(0)
         self.showData()
+
+    def go_back(self):
+        self.master.destroy()
+        self.previous.deiconify()
