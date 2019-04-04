@@ -37,6 +37,13 @@ class DisplayRoot(Frame):
         root.withdraw()
         student_menu(t1, root)
         t1.wm_protocol("WM_DELETE_WINDOW", root.destroy)
+    
+    def open_modify(self):
+        t2 = Toplevel(self.master)
+        self.master.withdraw()
+        modify_menu(t2, self.master)
+        t2.wm_protocol("WM_DELETE_WINDOW", self.previous.destroy)
+      
 
 
 root.resizable(width=False, height=False)
