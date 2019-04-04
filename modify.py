@@ -3,8 +3,7 @@ import csv
 from collections import OrderedDict
 
 class modify_menu(Frame):
-        
-        def __init__(self, master, previous):      
+        def __init__(self, master, previous):
                 Frame.__init__(self, master)
                 self.previous = previous
                 self.grid()
@@ -71,6 +70,8 @@ class modify_menu(Frame):
                 self.ans3_entry.grid(row=9, column=3, columnspan=2)
                 self.ans4_entry = Entry(self, width=35, font=("Calibri", 12))
                 self.ans4_entry.grid(row=10, column=3, columnspan=2)
+                self.ans5_entry = Entry(self, width=35, font=("Calibri", 12))
+                self.ans5_entry.grid(row=10, column=3, columnspan=2)
 
         def fill_second_table(self):
                 self.to_edit = self.test_title_list.get(ANCHOR)

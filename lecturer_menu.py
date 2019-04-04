@@ -1,6 +1,7 @@
 from tkinter import *
 from create_test import create_test
 from performance import performance
+from modify import modify_menu
 
 
 class lecturer_menu(Frame):
@@ -43,12 +44,10 @@ class lecturer_menu(Frame):
         t2.wm_protocol("WM_DELETE_WINDOW", self.previous.destroy)
 
     def open_modify(self):
-        pass
-        # NJABULO
-        # t2 = Toplevel(self.master)
-        # self.master.withdraw()
-        # [NAME](t2)
-        # t2.wm_protocol("WM_DELETE_WINDOW", self.previous.destroy)
+        t2 = Toplevel(self.master)
+        self.master.withdraw()
+        modify_menu(t2, self.master)
+        t2.wm_protocol("WM_DELETE_WINDOW", self.previous.destroy)
 
     def open_login(self):
         self.master.destroy()
