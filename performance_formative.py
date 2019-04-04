@@ -48,7 +48,7 @@ class performance_formative(Frame):
         print(self.tests)
 
     def get_data(self):
-        with open("tests\\results.csv", 'r+', newline='') as csvFile:
+        with open("tests\\results_form.csv", 'r+', newline='') as csvFile:
             self.resreader = list(csv.reader(csvFile))
         with open("tests\\tests.csv", 'r+', newline='') as csvFile:
             self.testreader = list(csv.reader(csvFile))

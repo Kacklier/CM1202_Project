@@ -1,7 +1,7 @@
 #Author: Jamie
 import csv
 
-database = 'tests/results.csv'
+database = 'tests/results_sum.csv'
 tests = 'tests/tests.csv'
 
 def save_result(student_id, student_name, test_id, test_type, result):
@@ -35,7 +35,7 @@ def modify_result(student_id, test_type, new_result):
 		reader = csv.reader(readFile)
 		lines = list(reader)
 	readFile.close()
-	
+
 	for line in lines:
 		if line[0] == student_id and line[3] == test_type:
 			row = line
@@ -49,7 +49,7 @@ def modify_result(student_id, test_type, new_result):
 		writeFile.close()
 		print(f'Result has been modified for student id: {student_id}')
 	except Exception as ex:
-		print(ex)	    
+		print(ex)
 
 def show_all_results():
 	with open(database, 'r') as readFile:
@@ -78,9 +78,10 @@ def get_students_results(test_id, test_type):
 				studentDict.append((student[1], student[4]))
 			else:
 				continue
-	return studentDict	
+	return studentDict
 
-def get_student_result(student_name, test_type, test_id):	
+
+def get_student_result(student_name, test_type, test_id):
 	'''
 		--Example:
 			get_student_result("George", "summative", "1")
@@ -96,7 +97,8 @@ def get_student_result(student_name, test_type, test_id):
 			student = s
 	return student
 
-def GetTests(test_type):	
+
+def GetTests(test_type):
 	'''
 		--Example:
 			GetTests("summative")
@@ -115,8 +117,7 @@ def GetTests(test_type):
 		if d[0].lower() == "test" or d[0].lower() == "type":
 			content.append(d[1])
 
-	temp = []
-	pairs = [ ';'.join(x) for x in zip(content[0::2], content[1::2]) ]
+	pairs = [';'.join(x) for x in zip(content[0::2], content[1::2])]
 
 	to_return = []
 
@@ -127,4 +128,4 @@ def GetTests(test_type):
 
 	return to_return
 
-#print(get_student_result("Emima", "formative", "5"))	
+#print(get_student_result("Emima", "formative", "5"))

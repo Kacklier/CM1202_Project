@@ -1,11 +1,16 @@
-import csv
 from tkinter import *
 
+
+
+
+def openS():
+    root = Toplevel()
+    root.title("Statistics Page")
+    app=statisticsPage(root)
+    root.mainloop()
 """
 ******use this function to get correct answer list
-
 correctAnsLst=[]
-
 def read_assessment_csv_data(filename):
     with open (filename) as csv_file:
         reader = csv.reader(csv_file)
@@ -41,7 +46,6 @@ def getAnswerDict(correctAnsLst,studentResult):
     return answerDict
 
 getAnswerDict(correctAnsLst,studentResult)
-print(answerDict)
 
 totalMark=[]
 studentNum=[]
@@ -77,7 +81,7 @@ def getMin(percentageDict):
         if int(value[0])==Ans:
             MinLst.append(key)
     return MinLst
-    
+
 
 getMin(percentageDict)
 
@@ -100,8 +104,3 @@ class statisticsPage(Frame):
 
         studentNumLabel=Label(self,text="Number of attempts at the test:"+str(studentNum[0]),font=("MS",15,"bold"))
         studentNumLabel.pack()
-
-root = Tk()
-root.title("Statistics Page")
-app = statisticsPage(root)
-root.mainloop()

@@ -348,17 +348,15 @@ class current_test(Frame):
 
 	def form_check(self):
 		if self.time_start > 0:
-			self.final_attempt()
+			self.final_attempt_sum()
 		else:
 			tkinter.messagebox.showwarning("Time has run out!")
-		
 
-
-	def save_results(self):
+	def save_results_sum(self):
 		if self.inpName == "":
 			tkinter.messagebox.showwarning("Please input Name")
 		else:
-			with open('tests\\results.csv', 'r+', newline='') as results_file:
+			with open('tests\\results_sum.csv', 'r+', newline='') as results_file:
 				writer = csv.writer(results_file)
 				reader = csv.reader(results_file)
 				counter = 1
@@ -369,7 +367,7 @@ class current_test(Frame):
 				writer.writerow(["TITLE", self.test_data[self.startpoint + 1][1]])
 				writer.writerow(["NAME", self.inpName.get()])
 				writer.writerow(["TYPE", self.test_data[self.startpoint + 2][1]])
-				
+
 				questions = [1,2,3,4,5,6,7,8,9,10]
 				answers = [self.varA1.get(), self.varA2.get(), self.varA3.get(), self.varA4.get(), self.varA5.get(), self.varA6.get(), self.varA7.get(), self.varA8.get(), self.varA9.get(), self.varA10.get()]
 
@@ -379,12 +377,36 @@ class current_test(Frame):
 			tkinter.messagebox.showwarning("Saved")
 			if self.FormSum == 1:
 				self.completed = True
-		
- 
+
+	def save_results_form(self):
+		if self.inpName == "":
+			tkinter.messagebox.showwarning("Please input Name")
+		else:
+			with open('tests\\results_form.csv', 'r+', newline='') as results_file:
+				writer = csv.writer(results_file)
+				reader = csv.reader(results_file)
+				counter = 1
+				for line in reader:
+					if line[0] == "TEST":
+						counter += 1
+				writer.writerow(["TEST", counter])
+				writer.writerow(["TITLE", self.test_data[self.startpoint + 1][1]])
+				writer.writerow(["NAME", self.inpName.get()])
+				writer.writerow(["TYPE", self.test_data[self.startpoint + 2][1]])
+
+				questions = [1,2,3,4,5,6,7,8,9,10]
+				answers = [self.varA1.get(), self.varA2.get(), self.varA3.get(), self.varA4.get(), self.varA5.get(), self.varA6.get(), self.varA7.get(), self.varA8.get(), self.varA9.get(), self.varA10.get()]
+
+				for i in range(0,self.question_count):
+					writer.writerow(["QUESTION_NO", questions[i]])
+					writer.writerow(["ANSWER", answers[i]])
+			tkinter.messagebox.showwarning("Saved")
+			if self.FormSum == 1:
+				self.completed = True
 
 	def final_attempt(self):
 		print(self.varCB1.get())
 		if self.varCB1.get() == 1:
-			self.save_results()
+			self.save_results_form()
 		else:
 			tkinter.messagebox.showwarning("Results Not Saved")

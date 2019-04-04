@@ -1,6 +1,7 @@
 #Author: Jamie
 from tkinter import *
-from performance_formative import performance_formative
+from statisticsNew import *
+from view_summative import view_summative
 
 
 class performance(Frame):
@@ -30,15 +31,16 @@ class performance(Frame):
 
 
     def open_performance_formative(self):
-        t2 = Toplevel(self.master)
-        self.master.withdraw()
-        performance_formative(t2, self.master)
-        t2.wm_protocol("WM_DELETE_WINDOW", self.root.destroy)
+        # t2 = Toplevel(self.master)
+        # self.master.withdraw()
+        # performance_formative(t2, self.master)
+        # t2.wm_protocol("WM_DELETE_WINDOW", self.root.destroy)
+        openS()
 
     def open_performance_summative(self):
         t2 = Toplevel(self.master)
         self.master.withdraw()
-        performance_summative(t2)
+        view_summative(t2, self.master)
         t2.wm_protocol("WM_DELETE_WINDOW", self.root.destroy)
 
     def go_back(self):
